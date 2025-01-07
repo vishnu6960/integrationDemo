@@ -8,11 +8,12 @@ const App = () => {
   const [formData, setFormData] = useState({
     name:"",
     email:"",
-    password:""
+    password:"", 
+    role:""
   })
   const [loginFormData, setLoginFormData] = useState({
-    loginEmail:"",
-    loginPassword:""
+    email:"",
+    password:""
   })
   // console.log(books)
 
@@ -35,8 +36,6 @@ const App = () => {
   const handleChange = (e) => {
     const {name, value} = e.target
     setFormData({...formData, [name]: value})
-    setLoginFormData({...loginFormData, [name]: value})
-
     
   }
 
@@ -46,7 +45,7 @@ const App = () => {
       const response = await axios.post("http://localhost:5000/api/signup", formData)
     }
     catch(err) {
-      alert("user already exists")
+      // alert("user already exists")
       console.log("signing up is failed", err)
     }
   }
@@ -65,7 +64,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>Books list</h1>
+      {/* <h1>Books list</h1> */}
       {/* <ul>
         {books.map(book => (
           <li key={book._id}>{book.title} by {book.author} in {book.year}</li>
@@ -78,14 +77,16 @@ const App = () => {
         <input type="email" name='email' value={formData.email} onChange={handleChange} /><br />
         <label>Password : </label>
         <input type="password" name='password' value={formData.password} onChange={handleChange} /><br />
+        <label>Role : </label>
+        <input type="text" name='role' value={formData.role} onChange={handleChange} /><br />
         <button type='submit'>Sign Up</button>
       </form>
 
       <form onSubmit={handleLogin} id='login'>
         <label>Email : </label>
-        <input type="email" name='loginEmail' value={loginFormData.email} onChange={handleChange} /><br />
+        <input type="email" name='email' value={loginFormData.email} onChange={(e) => setLoginFormData({...loginFormData, email: e.target.value})} /><br />
         <label>Password : </label>
-        <input type="password" name='loginPassword' value={loginFormData.password} onChange={handleChange} /><br />
+        <input type="password" name='password' value={loginFormData.password} onChange={(e) => setLoginFormData({...loginFormData, password: e.target.value})} /><br />
         <button type='submit'>Login</button>
       </form>
     </div>
